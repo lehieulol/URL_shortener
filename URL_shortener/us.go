@@ -25,6 +25,7 @@ func add(w http.ResponseWriter, r *http.Request){
 func save(w http.ResponseWriter, r *http.Request){
 	source := r.URL.Path[len("/save/"):];
 	a := r.FormValue("body");
+	if ((len(a)>len("http://") && a[:len("http://")] == "http://") || (len(a)>len("https://") && a[:len("https://")] == "https://")){} else {a = "https://"+a};
 	ioutil.WriteFile("URL\\"+source+".txt",[]byte(a),0600);
 	http.Redirect(w,r,"/goto/"+source,http.StatusFound);
 }
